@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
-import { Canvas, extend, useThree, useFrame } from "@react-three/fiber";
+import React, { useRef, useState, Suspense } from "react";
+import { Canvas, extend, useThree, useFrame, useLoader} from "@react-three/fiber";
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import {
   CubeTextureLoader,
   CubeCamera,
@@ -9,7 +10,7 @@ import {
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import "./App.css";
-import {Text} from '@react-three/drei';
+import {Text, Environment} from '@react-three/drei';
 import {
   EffectComposer,
   DepthOfField,
@@ -17,7 +18,9 @@ import {
   Noise,
   Vignette
 } from "@react-three/postprocessing";
+import MyModel from './MyModel.js';
 extend({ OrbitControls });
+//const MyModel = React.lazy(() => import('./MyModel.js'));
 
 const CameraControls = () => {
   // Get a reference to the Three.js Camera, and the canvas html element.
@@ -84,12 +87,12 @@ function Sphere(props) {
   const cubeCamera = new CubeCamera(1, 1000, cubeRenderTarget);
   cubeCamera.position.set(0, 0, 0);
   scene.add(cubeCamera);
-    const mesh = useRef();
+  const mesh = useRef();
   // Update the cubeCamera with current renderer and scene.
   useFrame((t) => { mesh.current.rotation.x = Math.sin(t.clock.elapsedTime*100)*50
-mesh.current.rotation.y = Math.sin(t.clock.elapsedTime*80)*50
-//cubeCamera.position.set(Math.sin(t.clock.elapsedTime)*1,Math.sin(t.clock.elapsedTime)*5,Math.sin(t.clock.elapsedTime)*4)
-  cubeCamera.update(gl, scene)});
+    mesh.current.rotation.y = Math.sin(t.clock.elapsedTime*80)*50
+    //cubeCamera.position.set(Math.sin(t.clock.elapsedTime)*1,Math.sin(t.clock.elapsedTime)*5,Math.sin(t.clock.elapsedTime)*4)
+    cubeCamera.update(gl, scene)});
 
   return (
     <mesh visible position={[0, 1, 0]} 
@@ -112,38 +115,32 @@ mesh.current.rotation.y = Math.sin(t.clock.elapsedTime*80)*50
 }
 
 // Lights
-function App() {
+function CustomBlender() {
   const [hovered, setHovered]=useState(false);
+  //const gltf = useLoader(GLTFLoader, './ojo_broken_a.gltf')
   return (
-    <Canvas className="canvas">
+    <Canvas>
       <CameraControls />
-      <Sphere  onHover={e => setHovered(true)} outHover={e => setHovered(false)}/>
+        <Environment files={['gradiente.jpg','gradiente.jpg','gradiente.jpg','test.png','test.png','test.png']} path='./' background={false} />
       <SkyBox />
       <Text      
         color={'#EC2D2D'}
         fontSize={1}
         maxWidth={5}
-      textAlign={'left'}
-      font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
+        textAlign={'left'}
+        font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
         fillOpacity={0}
-      strokeWidth={'2.5%'}
-      strokeColor="#000"
-      anchorX="right"
-      anchorY="right">
-       Mirada Vegetal 
+        strokeWidth={'2.5%'}
+        strokeColor="#000"
+        anchorX="right"
+        anchorY="right">
+        Mirada Vegetal 
       </Text>
-      {hovered && <EffectComposer multisampling={0} disableNormalPass={true}>
-        <Bloom
-          luminanceThreshold={0.14}
-          luminanceSmoothing={0.9}
-          height={300}
-          opacity={3}
-        />
-        <Noise opacity={0.5} />
-
-      </EffectComposer>}
+      <directionalLight position={[10, 10, 5]} intensity={1} />
+      <pointLight position={[0, -10, 5]} intensity={1} />
+      <MyModel />
     </Canvas>
   );
 }
 
-export default App;
+export default CustomBlender;
