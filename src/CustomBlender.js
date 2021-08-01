@@ -61,12 +61,20 @@ function SkyBox() {
     "/psicodelico.jpg" ,
     "/psicodelico.jpg" */
 
-    "/gradiente.jpg",
+    /*"/gradiente.jpg",
     "/test.png",
     "/hojarezca.jpg",
     "/words.png",
     "/test.png",
     "/gradiente.jpg"
+    */
+
+    "/k5.jpeg",
+    "/k5.jpeg",
+    "/k5.jpeg",
+    "/k5.jpeg",
+    "/k5.jpeg",
+    "/k5.jpeg",
   ]);
 
   // Set the scene background property to the resulting texture.
@@ -121,24 +129,33 @@ function CustomBlender() {
   return (
     <Canvas>
       <CameraControls />
-        <Environment files={['gradiente.jpg','gradiente.jpg','gradiente.jpg','test.png','test.png','test.png']} path='./' background={false} />
-      <SkyBox />
+      {//<Environment files={['gradiente.jpg','gradiente.jpg','gradiente.jpg','test.png','test.png','test.png']} path='./' background={true} />
+      }
+        <Environment files={['k2.jpeg',
+                             'k2.jpeg',
+                             'k2.jpeg',
+                             'k2.jpeg',
+                             'k2.jpeg',
+                             'k2.jpeg']} path='./' background={false} />
+      
+        {/*<Environment files={['nubes.jpg','gradiente.jpg','nubes.jpg','nubes.jpg','nubes.jpg','nubes.jpg']} path='./' background={false} />*/}
+      <SkyBox/>
       <Text      
-        color={'#EC2D2D'}
+        color={'#361D6B'}
         fontSize={1}
         maxWidth={5}
         textAlign={'left'}
-        font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
-        fillOpacity={0}
-        strokeWidth={'2.5%'}
-        strokeColor="#000"
+        font="https://cdn.jsdelivr.net/npm/@fontsource/kumar-one@4.5.0/files/kumar-one-all-400-normal.woff"
+        fillOpacity={5}
+        strokeWidth={'3.5%'}
+        strokeColor="#361D6B"
         anchorX="right"
         anchorY="right">
         Mirada Vegetal 
       </Text>
-      <directionalLight position={[10, 10, 5]} intensity={1} />
+    <directionalLight position={[10, 10, 5]} intensity={1} />
       <pointLight position={[0, -10, 5]} intensity={1} />
-      <MyModel />
+      <MyModel scale={2.5} position={[2,0,0]}/>
     </Canvas>
   );
 }
