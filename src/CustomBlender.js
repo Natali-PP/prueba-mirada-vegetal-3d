@@ -141,16 +141,18 @@ function CustomBlender() {
         {/*<Environment files={['nubes.jpg','gradiente.jpg','nubes.jpg','nubes.jpg','nubes.jpg','nubes.jpg']} path='./' background={false} />*/}
       <SkyBox/>
       <Text      
-        color={'#361D6B'}
+        color={'#05FF00'}
         fontSize={1}
         maxWidth={5}
         textAlign={'left'}
         font="https://cdn.jsdelivr.net/npm/@fontsource/kumar-one@4.5.0/files/kumar-one-all-400-normal.woff"
         fillOpacity={5}
         strokeWidth={'3.5%'}
-        strokeColor="#361D6B"
+        strokeColor="#000"
         anchorX="right"
-        anchorY="right">
+        anchorY="right"
+        position={[-1,1.5,0]}
+      >
         Mirada Vegetal 
       </Text>
     <directionalLight position={[10, 10, 5]} intensity={1} />
